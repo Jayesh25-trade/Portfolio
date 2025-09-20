@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jayesh Mal - Full-Stack & AI Developer Portfolio</title>
+    <meta name="description" content="Jayesh Mal - MCA student, Full-Stack & AI Developer. I build AI-powered tools, interactive web apps, and immersive experiences.">
+    <meta name="author" content="Jayesh Mal">
+    <meta name="keywords" content="Full-Stack Developer, AI Developer, Web Development, Three.js, React, Node.js">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Jayesh Mal - Full-Stack & AI Developer Portfolio">
+    <meta property="og:description" content="I build AI-powered tools, interactive web apps, and immersive experiences. Full-stack development with a focus on UX, performance and creative interaction.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="profile-photo.png">
+    
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Jayesh Mal - Full-Stack & AI Developer Portfolio">
+    <meta name="twitter:description" content="I build AI-powered tools, interactive web apps, and immersive experiences.">
+    <meta name="twitter:image" content="profile-photo.png">
+
+    <!-- 
+    =====================================
+    PORTFOLIO INSTRUCTIONS FOR EDITING:
+    =====================================
+    
+    Author: AI Generated Portfolio for Jayesh Mal
+    
+    TO REPLACE IMAGES:
+    - Replace profile-photo.png with your professional headshot
+    - Replace project screenshots: content-writing-ai.png, glycoguide.png, cinevibe.png, irritate.png
+    - All images should be placed in the same directory as this HTML file
+    
+    TO UPDATE CONTENT:
+    - Edit the projects array in the JavaScript section (search for "const projects =")
+    - Update personal information in the HTML sections
+    - Modify contact links and social media handles
+    
+    TO TOGGLE GRAPHICS:
+    - Users can click "Performance Settings" button to toggle low-graphics mode
+    - WebGL fallback automatically activates on unsupported devices
+    
+    TECHNICAL NOTES:
+    - Works in Chrome, Firefox, Safari (latest versions)
+    - Mobile responsive with touch controls
+    - Uses CDN libraries with embedded fallbacks
+    - Single file - no build tools required
+    - Just open this file in any modern browser
+    
+    KNOWN LIMITATIONS:
+    - Some older mobile devices may require low-graphics mode
+    - WebGL not supported in very old browsers (graceful fallback provided)
+    -->
+
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a0a2e 25%, #16213e 50%, #0f0f23 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a0a2e 50%, #16213e 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 1s ease-out;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(124, 58, 237, 0.3);
+            border-top: 3px solid #7c3aed;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        .loading-text {
+            font-size: 18px;
+            color: #a855f7;
+            text-align: center;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 40px;
+            background: rgba(12, 12, 12, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(124, 58, 237, 0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #a855f7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .logo:hover {
+            color: #7c3aed;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #d1d5db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: #a855f7;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #a855f7;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .settings-btn {
+            background: rgba(124, 58, 237, 0.2);
+            border: 1px solid #7c3aed;
+            color: #a855f7;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .settings-btn:hover {
+            background: rgba(124, 58, 237, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Canvas Container */
+        .canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* Content Sections */
+        .content {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+        }
+
+        .section {
+            min-height: 100vh;
+            padding: 100px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section-content {
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: transparent;
+            position: relative;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff 0%, #a855f7 50%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: #d1d5db;
+            margin-bottom: 30px;
+            max-width: 800px;
+        }
+
+        .hero-tagline {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            color: #9ca3af;
+            margin-bottom: 50px;
+            max-width: 900px;
+            line-height: 1.5;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin: 0 10px;
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.4);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            border: 2px solid #7c3aed;
+            color: #a855f7;
+        }
+
+        .cta-button.secondary:hover {
+            background: rgba(124, 58, 237, 0.1);
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 60px;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .about-image {
+            text-align: center;
+        }
+
+        .profile-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #7c3aed;
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 30px 60px rgba(124, 58, 237, 0.4);
+        }
+
+        .about-text {
+            text-align: left;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #ffffff 0%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .about-description {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #d1d5db;
+            margin-bottom: 30px;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(124, 58, 237, 0.3);
+            border-color: #7c3aed;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover .project-image {
+            transform: scale(1.05);
+        }
+
+        .project-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 15px;
+        }
+
+        .project-description {
+            font-size: 16px;
+            color: #d1d5db;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tech-tag {
+            background: rgba(124, 58, 237, 0.2);
+            color: #a855f7;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .project-link {
+            background: transparent;
+            border: 1px solid #7c3aed;
+            color: #a855f7;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            background: #7c3aed;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .project-link.primary {
+            background: #7c3aed;
+            color: white;
+        }
+
+        .project-link.primary:hover {
+            background: #6d28d9;
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .skill-category {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+            border-color: #7c3aed;
+        }
+
+        .skill-category h3 {
+            color: #a855f7;
+            font-size: 20px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            color: #d1d5db;
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .skill-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #7c3aed;
+            font-weight: bold;
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .contact-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            border-color: #7c3aed;
+        }
+
+        .contact-icon {
+            font-size: 40px;
+            color: #a855f7;
+            margin-bottom: 20px;
+        }
+
+        .contact-link {
+            color: #d1d5db;
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        .contact-link:hover {
+            color: #a855f7;
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 30px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: #a855f7;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .nav-link {
+                font-size: 14px;
+            }
+
+            .section {
+                padding: 80px 20px;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+
+            .about-text {
+                text-align: center;
+            }
+
+            .profile-image {
+                width: 250px;
+                height: 250px;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-title {
+                margin-bottom: 15px;
+            }
+
+            .cta-button {
+                display: block;
+                margin: 10px auto;
+                width: fit-content;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Focus styles for accessibility */
+        *:focus {
+            outline: 2px solid #a855f7;
+            outline-offset: 2px;
+        }
+
+        /* Performance Settings Modal */
+        .settings-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .settings-content {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            position: relative;
+            text-align: center;
+        }
+
+        .setting-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(124, 58, 237, 0.2);
+        }
+
+        .toggle-switch {
+            width: 50px;
+            height: 25px;
+            background: #374151;
+            border-radius: 25px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: #7c3aed;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 21px;
+            height: 21px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-switch.active::after {
+            transform: translateX(25px);
+        }
+
+        /* Low Graphics Mode */
+        .low-graphics .canvas-container {
+            display: none;
+        }
+
+        .low-graphics {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d1b69 50%, #1e3a8a 100%);
+        }
+
+        /* Animation classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+        }
+
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s ease;
+        }
+
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.8s ease;
+        }
+
+        .scale-in.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Education section styles */
+        .education-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .education-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .education-card:hover {
+            transform: translateY(-5px);
+            border-color: #7c3aed;
+        }
+
+        .education-degree {
+            font-size: 20px;
+            font-weight: 700;
+            color: #a855f7;
+            margin-bottom: 10px;
+        }
+
+        .education-institution {
+            font-size: 18px;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .education-year {
+            font-size: 16px;
+            color: #9ca3af;
+            margin-bottom: 10px;
+        }
+
+        .education-percentage {
+            font-size: 16px;
+            color: #d1d5db;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading Portfolio Experience...</div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav" id="navigation">
+        <div class="nav-content">
+            <a href="#home" class="logo">Jayesh Mal</a>
+            <div class="nav-links">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <button class="settings-btn" onclick="openSettings()">Performance Settings</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 3D Canvas Container -->
+    <div class="canvas-container" id="canvasContainer">
+        <!-- Three.js canvas will be inserted here -->
+    </div>
+
+    <!-- Main Content -->
+    <main class="content">
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <h1 class="hero-title fade-in">Jayesh Mal</h1>
+            <p class="hero-subtitle fade-in">MCA Student, Full-Stack & AI Developer</p>
+            <p class="hero-tagline fade-in">I build AI-powered tools, interactive web apps, and immersive experiences. Full-stack development with a focus on UX, performance and creative interaction.</p>
+            <div class="fade-in">
+                <a href="#projects" class="cta-button">View My Work</a>
+                <a href="#contact" class="cta-button secondary">Get In Touch</a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="section-content">
+                <h2 class="section-title fade-in">About Me</h2>
+                <div class="about-grid">
+                    <div class="about-image slide-in-left">
+                        <img src="Screenshot 2025-07-17 200931.png" alt="Jayesh Mal - Professional headshot" class="profile-image">
+                    </div>
+                    <div class="about-text slide-in-right">
+                        <p class="about-description">
+                            I'm a passionate MCA student with a deep interest in full-stack development and artificial intelligence. 
+                            My journey in technology has led me to create innovative solutions that bridge the gap between complex 
+                            technical concepts and user-friendly experiences.
+                        </p>
+                        <p class="about-description">
+                            With expertise spanning from frontend technologies like React and Three.js to backend systems using 
+                            Node.js and AI integration, I enjoy building applications that not only solve real-world problems 
+                            but also provide engaging and interactive user experiences.
+                        </p>
+                        <p class="about-description">
+                            When I'm not coding, you'll find me playing keyboard and flute, exploring different languages, 
+                            or working on creative projects that combine technology with art.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section id="education" class="section">
+            <div class="section-content">
+                <h2 class="section-title fade-in">Education</h2>
+                <div class="education-grid">
+                    <div class="education-card scale-in">
+                        <div class="education-degree">Master of Computer Applications (MCA)</div>
+                        <div class="education-institution">Currently Pursuing</div>
+                        <div class="education-year">2023 - 2025</div>
+                        <div class="education-percentage">Specialization: Full-Stack Development & AI</div>
+                    </div>
+                    <div class="education-card scale-in">
+                        <div class="education-degree">Bachelor of Computer Applications (BCA)</div>
+                        <div class="education-institution">Completed</div>
+                        <div class="education-year">2020 - 2023</div>
+                        <div class="education-percentage">85.2%</div>
+                    </div>
+                    <div class="education-card scale-in">
+                        <div class="education-degree">Higher Secondary Certificate (HSC)</div>
+                        <div class="education-institution">Science Stream</div>
+                        <div class="education-year">2019 - 2020</div>
+                        <div class="education-percentage">92%</div>
+                    </div>
+                    <div class="education-card scale-in">
+                        <div class="education-degree">Secondary School Certificate (SSC)</div>
+                        <div class="education-institution">Completed</div>
+                        <div class="education-year">2017 - 2018</div>
+                        <div class="education-percentage">82.1%</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section">
+            <div class="section-content">
+                <h2 class="section-title fade-in">Featured Projects</h2>
+                <div class="projects-grid" id="projectsGrid">
+                    <!-- Projects will be dynamically inserted here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="section">
+            <div class="section-content">
+                <h2 class="section-title fade-in">Skills & Expertise</h2>
+                <div class="skills-grid">
+                    <div class="skill-category scale-in">
+                        <h3>Technical Skills</h3>
+                        <ul class="skill-list">
+                            <li>JavaScript (ES6+), TypeScript</li>
+                            <li>React, Next.js, Vue.js</li>
+                            <li>Node.js, Express.js</li>
+                            <li>PHP, MySQL</li>
+                            <li>Python, AI/ML</li>
+                            <li>Three.js, WebGL</li>
+                            <li>HTML5, CSS3, Tailwind CSS</li>
+                            <li>Git, Docker, AWS</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category scale-in">
+                        <h3>AI & Data</h3>
+                        <ul class="skill-list">
+                            <li>OpenAI GPT Integration</li>
+                            <li>Machine Learning</li>
+                            <li>Natural Language Processing</li>
+                            <li>Data Analysis</li>
+                            <li>API Development</li>
+                            <li>Database Design</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category scale-in">
+                        <h3>Soft Skills</h3>
+                        <ul class="skill-list">
+                            <li>Problem Solving</li>
+                            <li>Creative Thinking</li>
+                            <li>Team Collaboration</li>
+                            <li>Project Management</li>
+                            <li>Communication</li>
+                            <li>Adaptability</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category scale-in">
+                        <h3>Interests</h3>
+                        <ul class="skill-list">
+                            <li>Music (Keyboard & Flute)</li>
+                            <li>Language Learning</li>
+                            <li>3D Graphics & Animation</li>
+                            <li>Game Development</li>
+                            <li>UI/UX Design</li>
+                            <li>Open Source Contribution</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="section-content">
+                <h2 class="section-title fade-in">Get In Touch</h2>
+                <div class="contact-grid">
+                    <div class="contact-card scale-in">
+                        <div class="contact-icon">✉️</div>
+                        <h3>Email</h3>
+                        <a href="mailto:jayeshneo07@gmail.com" class="contact-link">jayeshneo07@gmail.com</a>
+                    </div>
+                    <div class="contact-card scale-in">
+                        <div class="contact-icon">💼</div>
+                        <h3>GitHub</h3>
+                        <a href="https://github.com/Jayesh25-trade" target="_blank" rel="noopener noreferrer" class="contact-link">github.com/Jayesh25-trade</a>
+                    </div>
+                    <div class="contact-card scale-in">
+                        <div class="contact-icon">📱</div>
+                        <h3>Instagram</h3>
+                        <a href="https://www.instagram.com/jayesh_cringzz/" target="_blank" rel="noopener noreferrer" class="contact-link">@jayesh_cringzz</a>
+                    </div>
+                </div>
+                <div class="fade-in" style="margin-top: 50px;">
+                    <p style="font-size: 18px; color: #d1d5db; text-align: center;">
+                        <strong>Internship Experience:</strong> Kalyani Steels Ltd. - Gained hands-on experience in enterprise software development and database management.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Project Detail Modal -->
+    <div class="modal" id="projectModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div id="modalContent">
+                <!-- Project details will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Performance Settings Modal -->
+    <div class="settings-modal" id="settingsModal">
+        <div class="settings-content">
+            <button class="modal-close" onclick="closeSettings()">&times;</button>
+            <h2>Performance Settings</h2>
+            <div class="setting-option">
+                <div>
+                    <strong>3D Graphics</strong>
+                    <p style="font-size: 14px; color: #9ca3af;">Enable/disable 3D scene for better performance</p>
+                </div>
+                <div class="toggle-switch active" id="graphicsToggle" onclick="toggleGraphics()"></div>
+            </div>
+            <div class="setting-option">
+                <div>
+                    <strong>Sound Effects</strong>
+                    <p style="font-size: 14px; color: #9ca3af;">Enable/disable interaction sounds</p>
+                </div>
+                <div class="toggle-switch" id="soundToggle" onclick="toggleSound()"></div>
+            </div>
+            <div class="setting-option">
+                <div>
+                    <strong>Animations</strong>
+                    <p style="font-size: 14px; color: #9ca3af;">Reduce motion for accessibility</p>
+                </div>
+                <div class="toggle-switch active" id="animationToggle" onclick="toggleAnimations()"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- GSAP Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Main JavaScript -->
+    <script>
+        // Global variables
+        let scene, camera, renderer, mouse, raycaster, intersectObjects = [];
+        let isLowGraphics = false;
+        let soundEnabled = false;
+        let animationsEnabled = true;
+
+        // Projects data
+        const projects = [
+            {
+                id: 'cinevibe',
+                title: 'CineVibe',
+                description: 'AI-powered movie recommendation platform that curates personalized cinematic experiences based on user mood and preferences.',
+                image: 'cinevibe.png',
+                tech: ['HTML/CSS/JS', 'Node.js', 'OpenAI', 'TMDB API'],
+                liveUrl: 'https://cinevibe-movie.onrender.com/',
+                githubUrl: 'https://github.com/Jayesh25-trade',
+                details: 'CineVibe revolutionizes movie discovery by using AI to understand user emotions and preferences, then recommending the perfect films to match their current vibe. Features include mood-based search, personalized recommendations, and comprehensive movie information.'
+            },
+            {
+                id: 'glycoguide',
+                title: 'GlycoGuide',
+                description: 'Intelligent diabetes care assistant with AI-powered chat interface and medical report analysis capabilities.',
+                image: 'glycoguide.png',
+                tech: ['React', 'Supabase', 'AI Integration', 'Medical APIs'],
+                liveUrl: 'https://glycoguide.onrender.com',
+                githubUrl: 'https://github.com/Jayesh25-trade',
+                details: 'GlycoGuide provides personalized diabetes management through AI-powered conversations, report analysis, and educational content. It helps users track their health metrics and provides intelligent recommendations for better diabetes care.'
+            },
+            {
+                id: 'irritate',
+                title: 'Irritate',
+                description: 'Gamified Day-After Calculator featuring interactive mazes and puzzles for an engaging user experience.',
+                image: 'irritate.png',
+                tech: ['JavaScript', 'Canvas API', 'Game Logic', 'CSS Animations'],
+                liveUrl: 'https://irritate.onrender.com/',
+                githubUrl: 'https://github.com/Jayesh25-trade',
+                details: 'Irritate transforms boring calculations into an exciting game experience. Users navigate through interactive mazes and solve puzzles while the application calculates their desired results in the background.'
+            },
+            {
+                id: 'content-writing',
+                title: 'Content Writing AI',
+                description: 'Multi-platform content assistant that generates ready-to-publish content for social media, blogs, and marketing.',
+                image: 'content-written-netlify-app-.jpg',
+                tech: ['React', 'Tailwind CSS', 'Node.js', 'AI APIs'],
+                liveUrl: 'https://content-written.netlify.app/',
+                githubUrl: 'https://github.com/Jayesh25-trade',
+                details: 'This AI-powered content creation tool helps marketers and content creators generate high-quality, ready-to-publish content across multiple platforms. Features include customizable templates, tone adjustment, and platform-specific optimization.'
+            },
+            {
+                id: 'trip-planner',
+                title: 'Trip Planner (Android)',
+                description: 'Mobile application for comprehensive trip planning with itinerary management and booking features.',
+                image: 'triplaner.png',
+                tech: ['Java', 'Firebase', 'Android SDK', 'Material Design'],
+                liveUrl: '#',
+                githubUrl: 'https://github.com/Jayesh25-trade',
+                details: 'Native Android application built with Java and Firebase for comprehensive trip planning. Features include itinerary creation, expense tracking, location recommendations, and collaborative planning with friends and family.'
+            },
+            {
+                id: 'happy-socks',
+                title: 'Happy Socks E-commerce',
+                description: 'Full-stack e-commerce platform with complete shopping cart, payment integration, and admin panel.',
+                image: 'happy.png',
+                tech: ['PHP', 'MySQL', 'JavaScript', 'Bootstrap'],
+                liveUrl: '#',
+                githubUrl: 'https://github.com/Jayesh25-trade',
+                details: 'Complete e-commerce solution built with PHP and MySQL. Features include product catalog, shopping cart, secure payment processing, order management, and comprehensive admin dashboard for inventory and sales management.'
+            }
+        ];
+
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initProjects();
+            initScrollAnimations();
+            initSmoothScrolling();
+            
+            // Initialize 3D scene if WebGL is supported
+            if (typeof THREE !== 'undefined' && isWebGLSupported()) {
+                init3DScene();
+            } else {
+                console.log('WebGL not supported, using 2D fallback');
+                document.body.classList.add('low-graphics');
+            }
+
+            // Hide loading screen
+            setTimeout(() => {
+                document.getElementById('loadingScreen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loadingScreen').style.display = 'none';
+                }, 1000);
+            }, 2000);
+        });
+
+        // Check WebGL support
+        function isWebGLSupported() {
+            try {
+                const canvas = document.createElement('canvas');
+                return !!(window.WebGLRenderingContext && canvas.getContext('webgl'));
+            } catch (e) {
+                return false;
+            }
+        }
+
+        // Initialize projects
+        function initProjects() {
+            const projectsGrid = document.getElementById('projectsGrid');
+            
+            projects.forEach((project, index) => {
+                const projectCard = document.createElement('div');
+                projectCard.className = 'project-card scale-in';
+                projectCard.style.animationDelay = `${index * 0.1}s`;
+                projectCard.onclick = () => openProjectModal(project);
+                
+                projectCard.innerHTML = `
+                    <img src="${project.image}" alt="${project.title} screenshot" class="project-image" loading="lazy">
+                    <h3 class="project-title">${project.title}</h3>
+                    <p class="project-description">${project.description}</p>
+                    <div class="tech-stack">
+                        ${project.tech.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+                    </div>
+                    <div class="project-links">
+                        <a href="${project.liveUrl}" target="_blank" rel="noopener noreferrer" class="project-link primary" onclick="event.stopPropagation()">View Live</a>
+                        <a href="${project.githubUrl}" target="_blank" rel="noopener noreferrer" class="project-link" onclick="event.stopPropagation()">View Code</a>
+                    </div>
+                `;
+                
+                projectsGrid.appendChild(projectCard);
+            });
+        }
+
+        // Open project modal
+        function openProjectModal(project) {
+            const modal = document.getElementById('projectModal');
+            const modalContent = document.getElementById('modalContent');
+            
+            modalContent.innerHTML = `
+                <h2 style="color: #a855f7; margin-bottom: 20px;">${project.title}</h2>
+                <img src="${project.image}" alt="${project.title} screenshot" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 15px; margin-bottom: 20px;">
+                <p style="color: #d1d5db; font-size: 18px; line-height: 1.6; margin-bottom: 20px;">${project.details}</p>
+                <div style="margin-bottom: 20px;">
+                    <h3 style="color: #ffffff; margin-bottom: 10px;">Tech Stack:</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        ${project.tech.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+                    </div>
+                </div>
+                <div style="display: flex; gap: 15px; justify-content: center;">
+                    <a href="${project.liveUrl}" target="_blank" rel="noopener noreferrer" class="cta-button">Open Live Site</a>
+                    <a href="${project.githubUrl}" target="_blank" rel="noopener noreferrer" class="cta-button secondary">View Source Code</a>
+                </div>
+            `;
+            
+            modal.style.display = 'flex';
+            
+            if (typeof gsap !== 'undefined' && animationsEnabled) {
+                gsap.fromTo(modalContent, 
+                    { scale: 0.8, opacity: 0 }, 
+                    { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(1.7)" }
+                );
+            }
+        }
+
+        // Close modal
+        function closeModal() {
+            const modal = document.getElementById('projectModal');
+            const modalContent = document.getElementById('modalContent');
+            
+            if (typeof gsap !== 'undefined' && animationsEnabled) {
+                gsap.to(modalContent, {
+                    scale: 0.8,
+                    opacity: 0,
+                    duration: 0.2,
+                    onComplete: () => {
+                        modal.style.display = 'none';
+                    }
+                });
+            } else {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Initialize 3D Scene
+        function init3DScene() {
+            if (isLowGraphics) return;
+            
+            // Scene setup
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x000000, 0);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            
+            document.getElementById('canvasContainer').appendChild(renderer.domElement);
+            
+            // Mouse and raycaster
+            mouse = new THREE.Vector2();
+            raycaster = new THREE.Raycaster();
+            
+            // Create floating geometries
+            createFloatingObjects();
+            
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0x7c3aed, 1);
+            directionalLight.position.set(5, 5, 5);
+            scene.add(directionalLight);
+            
+            const pointLight = new THREE.PointLight(0xa855f7, 0.8, 100);
+            pointLight.position.set(-5, 5, -5);
+            scene.add(pointLight);
+            
+            // Position camera
+            camera.position.z = 15;
+            camera.position.y = 2;
+            
+            // Event listeners
+            document.addEventListener('mousemove', onMouseMove, false);
+            document.addEventListener('click', onMouseClick, false);
+            window.addEventListener('resize', onWindowResize, false);
+            
+            // Start animation loop
+            animate();
+        }
+
+        // Create floating objects
+        function createFloatingObjects() {
+            const geometries = [
+                new THREE.BoxGeometry(1, 1, 1),
+                new THREE.SphereGeometry(0.7, 32, 32),
+                new THREE.ConeGeometry(0.6, 1.2, 32),
+                new THREE.TorusGeometry(0.6, 0.2, 16, 100),
+                new THREE.OctahedronGeometry(0.8),
+                new THREE.DodecahedronGeometry(0.7)
+            ];
+            
+            for (let i = 0; i < 12; i++) {
+                const geometry = geometries[Math.floor(Math.random() * geometries.length)];
+                const material = new THREE.MeshPhongMaterial({
+                    color: new THREE.Color().setHSL(Math.random() * 0.15 + 0.7, 0.7, 0.5),
+                    transparent: true,
+                    opacity: 0.8,
+                    shininess: 100
+                });
+                
+                const mesh = new THREE.Mesh(geometry, material);
+                mesh.position.set(
+                    (Math.random() - 0.5) * 30,
+                    (Math.random() - 0.5) * 20,
+                    (Math.random() - 0.5) * 20
+                );
+                
+                mesh.rotation.set(
+                    Math.random() * Math.PI,
+                    Math.random() * Math.PI,
+                    Math.random() * Math.PI
+                );
+                
+                mesh.userData = {
+                    originalPosition: mesh.position.clone(),
+                    rotationSpeed: {
+                        x: (Math.random() - 0.5) * 0.02,
+                        y: (Math.random() - 0.5) * 0.02,
+                        z: (Math.random() - 0.5) * 0.02
+                    },
+                    floatSpeed: Math.random() * 0.02 + 0.005,
+                    floatAmplitude: Math.random() * 2 + 0.5
+                };
+                
+                scene.add(mesh);
+                intersectObjects.push(mesh);
+            }
+        }
+
+        // Mouse move handler
+        function onMouseMove(event) {
+            if (isLowGraphics) return;
+            
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            
+            // Update camera position based on mouse
+            if (typeof gsap !== 'undefined' && animationsEnabled) {
+                gsap.to(camera.position, {
+                    x: mouse.x * 2,
+                    y: mouse.y * 1,
+                    duration: 2,
+                    ease: "power2.out"
+                });
+            }
+        }
+
+        // Mouse click handler
+        function onMouseClick(event) {
+            if (isLowGraphics) return;
+            
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(intersectObjects);
+            
+            if (intersects.length > 0) {
+                const object = intersects[0].object;
+                
+                // Animate clicked object
+                if (typeof gsap !== 'undefined' && animationsEnabled) {
+                    gsap.to(object.scale, {
+                        x: 1.5, y: 1.5, z: 1.5,
+                        duration: 0.2,
+                        yoyo: true,
+                        repeat: 1,
+                        ease: "power2.inOut"
+                    });
+                    
+                    gsap.to(object.rotation, {
+                        x: object.rotation.x + Math.PI,
+                        y: object.rotation.y + Math.PI,
+                        duration: 1,
+                        ease: "power2.out"
+                    });
+                }
+                
+                // Play sound if enabled
+                if (soundEnabled) {
+                    playClickSound();
+                }
+            }
+        }
+
+        // Window resize handler
+        function onWindowResize() {
+            if (isLowGraphics) return;
+            
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        // Animation loop
+        function animate() {
+            if (isLowGraphics) return;
+            
+            requestAnimationFrame(animate);
+            
+            // Animate floating objects
+            scene.children.forEach((child, index) => {
+                if (child.userData && child.userData.rotationSpeed) {
+                    child.rotation.x += child.userData.rotationSpeed.x;
+                    child.rotation.y += child.userData.rotationSpeed.y;
+                    child.rotation.z += child.userData.rotationSpeed.z;
+                    
+                    child.position.y = child.userData.originalPosition.y + 
+                        Math.sin(Date.now() * child.userData.floatSpeed + index) * child.userData.floatAmplitude;
+                }
+            });
+            
+            // Look at mouse position
+            camera.lookAt(mouse.x * 2, mouse.y * 1, 0);
+            
+            renderer.render(scene, camera);
+        }
+
+        // Initialize scroll animations
+        function initScrollAnimations() {
+            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && animationsEnabled) {
+                gsap.registerPlugin(ScrollTrigger);
+                
+                // Animate elements on scroll
+                gsap.utils.toArray('.fade-in').forEach(element => {
+                    gsap.fromTo(element, {
+                        opacity: 0,
+                        y: 50
+                    }, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 1,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: element,
+                            start: "top 80%",
+                            end: "bottom 20%",
+                            toggleActions: "play none none reverse"
+                        }
+                    });
+                });
+                
+                gsap.utils.toArray('.slide-in-left').forEach(element => {
+                    gsap.fromTo(element, {
+                        opacity: 0,
+                        x: -100
+                    }, {
+                        opacity: 1,
+                        x: 0,
+                        duration: 1,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: element,
+                            start: "top 80%",
+                            end: "bottom 20%",
+                            toggleActions: "play none none reverse"
+                        }
+                    });
+                });
+                
+                gsap.utils.toArray('.slide-in-right').forEach(element => {
+                    gsap.fromTo(element, {
+                        opacity: 0,
+                        x: 100
+                    }, {
+                        opacity: 1,
+                        x: 0,
+                        duration: 1,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: element,
+                            start: "top 80%",
+                            end: "bottom 20%",
+                            toggleActions: "play none none reverse"
+                        }
+                    });
+                });
+                
+                gsap.utils.toArray('.scale-in').forEach(element => {
+                    gsap.fromTo(element, {
+                        opacity: 0,
+                        scale: 0.8
+                    }, {
+                        opacity: 1,
+                        scale: 1,
+                        duration: 1,
+                        ease: "back.out(1.7)",
+                        scrollTrigger: {
+                            trigger: element,
+                            start: "top 80%",
+                            end: "bottom 20%",
+                            toggleActions: "play none none reverse"
+                        }
+                    });
+                });
+            } else {
+                // Fallback for when GSAP is not available or animations are disabled
+                const observerOptions = {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
+                };
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        }
+                    });
+                }, observerOptions);
+                
+                document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .scale-in').forEach(el => {
+                    observer.observe(el);
+                });
+            }
+        }
+
+        // Initialize smooth scrolling
+        function initSmoothScrolling() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Performance settings functions
+        function openSettings() {
+            document.getElementById('settingsModal').style.display = 'flex';
+        }
+
+        function closeSettings() {
+            document.getElementById('settingsModal').style.display = 'none';
+        }
+
+        function toggleGraphics() {
+            const toggle = document.getElementById('graphicsToggle');
+            const canvasContainer = document.getElementById('canvasContainer');
+            
+            if (toggle.classList.contains('active')) {
+                toggle.classList.remove('active');
+                document.body.classList.add('low-graphics');
+                canvasContainer.style.display = 'none';
+                isLowGraphics = true;
+            } else {
+                toggle.classList.add('active');
+                document.body.classList.remove('low-graphics');
+                canvasContainer.style.display = 'block';
+                isLowGraphics = false;
+                if (typeof THREE !== 'undefined' && !scene) {
+                    init3DScene();
+                }
+            }
+        }
+
+        function toggleSound() {
+            const toggle = document.getElementById('soundToggle');
+            
+            if (toggle.classList.contains('active')) {
+                toggle.classList.remove('active');
+                soundEnabled = false;
+            } else {
+                toggle.classList.add('active');
+                soundEnabled = true;
+            }
+        }
+
+        function toggleAnimations() {
+            const toggle = document.getElementById('animationToggle');
+            
+            if (toggle.classList.contains('active')) {
+                toggle.classList.remove('active');
+                animationsEnabled = false;
+                document.body.style.setProperty('--animation-duration', '0s');
+            } else {
+                toggle.classList.add('active');
+                animationsEnabled = true;
+                document.body.style.removeProperty('--animation-duration');
+            }
+        }
+
+        // Simple click sound
+        function playClickSound() {
+            if (!soundEnabled) return;
+            
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(400, audioContext.currentTime + 0.1);
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+            
+            oscillator.start();
+            oscillator.stop(audioContext.currentTime + 0.1);
+        }
+
+        // Close modals when clicking outside
+        document.addEventListener('click', function(event) {
+            const projectModal = document.getElementById('projectModal');
+            const settingsModal = document.getElementById('settingsModal');
+            
+            if (event.target === projectModal) {
+                closeModal();
+            }
+            
+            if (event.target === settingsModal) {
+                closeSettings();
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+                closeSettings();
+            }
+        });
+
+        // Add keyboard navigation for better accessibility
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Tab') {
+                // Ensure focus is visible
+                document.activeElement.style.outline = '2px solid #a855f7';
+            }
+        });
+
+        // Remove focus outline on mouse click
+        document.addEventListener('mousedown', function() {
+            document.activeElement.style.outline = 'none';
+        });
+    </script>
+</body>
+</html>
